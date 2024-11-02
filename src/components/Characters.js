@@ -1,7 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom"; // Para la navegación
+import { Link } from "react-router-dom";
 
 const Characters = ({ characters, handlePagination, info }) => {
+  const handleNext = () => handlePagination(info.offset + info.limit);
+  const handlePrev = () => handlePagination(info.offset - info.limit);
+
   return (
     <>
       <div className="row">
@@ -25,14 +28,14 @@ const Characters = ({ characters, handlePagination, info }) => {
       </div>
       <nav>
         <ul className="pagination justify-content-center">
-          {info.prev && (
+          {info.offset > 0 && (
             <li className="page-item">
-              <button className="page-link" onClick={() => handlePagination(info.prev)}>Previous</button>
+              <button className="page-link" onClick={handlePrev}>Previous</button>
             </li>
           )}
-          {info.next && (
+          {info.offset + info.count < info.total && (
             <li className="page-item">
-              <button className="page-link" onClick={() => handlePagination(info.next)}>Next</button>
+              <button className="page-link" onClick={handleNext}>Next</button>
             </li>
           )}
         </ul>
